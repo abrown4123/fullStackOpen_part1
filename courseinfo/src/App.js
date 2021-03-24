@@ -27,7 +27,17 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <>
-      {props.parts.map((course, i) => <p key={i + course.part}> {course.part} {course.exercise} </p>)}
+      <Part course={props.parts[0].part} exercise={props.parts[0].part}/>
+      <Part course={props.parts[1].part} exercise={props.parts[1].part}/>
+      <Part course={props.parts[2].part} exercise={props.parts[2].part}/>
+    </>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <>
+      <p> {props.course} {props.exercise} </p>
     </>
   )
 }
@@ -35,7 +45,7 @@ const Content = (props) => {
 const Total = (props) => {
   return (
     <>
-      <p>Number of exercises {props.exercises}</p>
+      <p>Number of exercises {props.numberOfCourses}</p>
     </>
   )
 }
@@ -45,7 +55,7 @@ const App = () => {
     <div>
       <Header title="Half Stack application development"/>
       <Content parts={courses}/>
-      <Total exercises={courses.length}/>
+      <Total numberOfCourses={courses.length}/>
     </div>
   )
 }
