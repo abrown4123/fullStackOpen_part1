@@ -1,15 +1,17 @@
 import React, {useState} from "react";
 
+const Title = ({ title }) => <h1>{title}</h1>;
+
 const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>;
 
-const Votes = ({ votes, selected }) => {
-  if (!votes[selected]) {
+const Votes = ({ votes, quote }) => {
+  if (!votes[quote]) {
     return (
       <div>this quote has no votes</div>
     );
   }
   return (
-    <div>has {votes[selected]} votes</div>
+    <div>has {votes[quote]} votes</div>
   );
 }
 
@@ -44,14 +46,26 @@ const App = () => {
     setVotes({...votes, [selected]: votes[selected] + 1});
   }
 
+  const mostPopularQuote = () => {
+    let popular = selected
+    for (let quote in votes) {
+      if (votes[quote] > votes[popular]) popular = quote;
+    }
+    return popular;
+  }
+
   return (
     <div>
+      <Title title="Anecdote of the day" />
       {anecdotes[selected]}
-      <Votes selected={selected} votes={votes} />
+      <Votes quote={selected} votes={votes} />
       <div>
         <Button handleClick={quoteVote} text="vote" /> 
         <Button handleClick={randomQuote} text="next anecdote" />
       </div>
+      <Title title="Anecdote with the most votes" />
+      {anecdotes[mostPopularQuote()]}
+      <Votes quote={mostPopularQuote()} votes={votes} />
     </div>
   )
 }
