@@ -35,6 +35,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(initVotes());
+  const [mostPopular, setMostPopular] = useState(0);
   
 
   const randomQuote = () => {
@@ -44,14 +45,7 @@ const App = () => {
 
   const quoteVote = () => {
     setVotes({...votes, [selected]: votes[selected] + 1});
-  }
-
-  const mostPopularQuote = () => {
-    let popular = selected
-    for (let quote in votes) {
-      if (votes[quote] > votes[popular]) popular = quote;
-    }
-    return popular;
+    if (votes[selected] + 1 > votes[mostPopular]) setMostPopular(selected);
   }
 
   return (
@@ -64,8 +58,8 @@ const App = () => {
         <Button handleClick={randomQuote} text="next anecdote" />
       </div>
       <Title title="Anecdote with the most votes" />
-      {anecdotes[mostPopularQuote()]}
-      <Votes quote={mostPopularQuote()} votes={votes} />
+      {anecdotes[mostPopular]}
+      <Votes quote={mostPopular} votes={votes} />
     </div>
   )
 }
